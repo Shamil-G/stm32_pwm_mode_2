@@ -1,0 +1,38 @@
+/*
+ * stm32f401-pwm.h
+ *
+ *  Created on: 26 февр. 2021 г.
+ *      Author: sguss
+ */
+
+#ifndef INC_STM32F401_PWM_H_
+#define INC_STM32F401_PWM_H_
+
+
+#ifdef STM32F401CCU
+#define MEANDR_TIMER_TICKS  839
+#define __TIMER TIM4
+#define MEANDR_TIMER_TICKS  839
+#define FIRST_COUNTER  TIM4->CCR1
+#define SECOND_COUNTER TIM4->CCR2
+#define DEADTIME_TICKS      40
+
+#define TIM2_CH1_PA         8
+#define TIM2_CH2_PA         9
+#define LED1_G_PC           9
+#define LED2_B_PC           8
+
+void GPIOENABLE(){
+	RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+	RCC->APB1ENR |= RCC_APB1ENR_TIM4EN;
+	GPIOB->MODER &= ~GPIO_MODER_MODE6;
+	GPIOB->MODER |= ~GPIO_MODER_MODE6_1;
+	GPIOB->MODER &= ~GPIO_MODER_MODE7;
+	GPIOB->MODER |= ~GPIO_MODER_MODE7_1;
+	GPIOB->MODER &= ~GPIO_MODER_MODE8;
+	GPIOB->MODER |= ~GPIO_MODER_MODE8_1;
+}
+#endif
+
+
+#endif /* INC_STM32F401_PWM_H_ */
