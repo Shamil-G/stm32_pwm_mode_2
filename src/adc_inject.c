@@ -5,8 +5,9 @@
  *      Author: Shamil Gusseynov
  */
 
-#include <main-pwm.h>
 #include "main.h"
+#include <main-pwm.h>
+#include "dev-include\adc-inject.h"
 
 #define ADC_16Bit
 
@@ -28,13 +29,7 @@
 #define MAX_INPUT_VOLTAGE 2.5
 #define FAULT result.output_fault<FAULT_MIN_VALUE || result.output_fault>FAULT_MAX_VALUE
 
-struct{
-	uint32_t adc_value[4];
-	float input_voltage;
-	float output_voltage;
-	float output_current;
-	float output_fault;
-} result;
+struct Result result;
 
 extern ADC_HandleTypeDef hadc1;
 
@@ -56,4 +51,8 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc)
 	result.output_voltage=((float)result.adc_value[1])*reference_voltage/ADC_COEFF;
 	result.output_current=((float)result.adc_value[2])*reference_voltage/ADC_COEFF;
 	result.output_fault = ((float)result.adc_value[3])*reference_voltage/ADC_COEFF;
+	if(FAULT && !result.first_started){
+			pwm_lock();
+	}
+	result.first_started;
 }

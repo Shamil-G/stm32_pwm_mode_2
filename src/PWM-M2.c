@@ -147,8 +147,8 @@ void soft_start(){
 void pwm_lock(){
 //	led1_on();
 //	led2_on();
-//	FIRST_COUNTER = 0;
-//	SECOND_COUNTER = MEANDR_TIMER_TICKS;
+	FIRST_COUNTER = 0;
+	SECOND_COUNTER = MEANDR_TIMER_TICKS;
 };
 #endif
 //*/
