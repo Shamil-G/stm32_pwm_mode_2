@@ -5,8 +5,8 @@
  *      Author: Shamil Gusseynov
  */
 
+#include <main-pwm.h>
 #include "main.h"
-#include "pwm-2.h"
 
 #define ADC_16Bit
 
@@ -15,7 +15,6 @@
 #else
 #define ADC_COEFF 4096
 #endif
-
 
 #define reference_voltage 3.26
 #define TARGET_VALUE 1.5
@@ -38,9 +37,7 @@ struct{
 } result;
 
 extern ADC_HandleTypeDef hadc1;
-void pwm_lock(void);
-uint8_t pwm_up(uint8_t);
-uint8_t pwm_down(uint8_t);
+
 
 void HAL_ADCEx_InjectedErrorCallback(ADC_HandleTypeDef* hadc){
 	result.input_voltage=0;
