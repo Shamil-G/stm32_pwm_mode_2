@@ -23,9 +23,14 @@
 
 #define INC_PWM_2_H_
 
-void start_pwm_2(void);
-void PWM_init(void);
 void soft_start(void);
+void start_pwm_2(void);
+
+uint8_t pwm_up(uint16_t pwm_value);
+uint8_t pwm_down(uint16_t pwm_value);
+void 	pwm_lock();
+
+void PWM_init(void);
 void pwm_test(void);
 
 // Код ниже не работает ...
