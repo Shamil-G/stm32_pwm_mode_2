@@ -10,24 +10,13 @@
 
 #define STM32F750
 
-#define PWM_VALUE           1
-#define PWM_PSC				0
+#include "stm32h743_pwm.h"
 
 //  Разгон до 1/INIT_PART
 #define INIT_PART			9
+#define PWM_VALUE           1
+#define PWM_PSC				0
 
-// 743, 742
-#ifdef STM32F750
-#include "stm32h7xx.h"
-// TIM1, TIM8 -> APB2
-// TIM2, TIM3, TIM4, TIM5 ... -> APB1
-#define __TIMER TIM4
-#define Alternate_Function 0b0010
-#define MEANDR_TIMER_TICKS  1199
-#define DEADTIME_TICKS      199
-#define FIRST_COUNTER  TIM4->CCR1
-#define SECOND_COUNTER TIM4->CCR2
-#endif
 
 
 #ifdef STM32F407VET
