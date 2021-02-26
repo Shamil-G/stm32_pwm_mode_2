@@ -33,6 +33,10 @@ struct Result result;
 
 extern ADC_HandleTypeDef hadc1;
 
+inline void init_adc_struct(void){
+	result.first_started=0;
+	result.faults=0;
+}
 
 void HAL_ADCEx_InjectedErrorCallback(ADC_HandleTypeDef* hadc){
 	result.input_voltage=0;
@@ -51,8 +55,26 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc)
 	result.output_voltage=((float)result.adc_value[1])*reference_voltage/ADC_COEFF;
 	result.output_current=((float)result.adc_value[2])*reference_voltage/ADC_COEFF;
 	result.output_fault = ((float)result.adc_value[3])*reference_voltage/ADC_COEFF;
-	if(FAULT && !result.first_started){
+	if(FAULT_LOW){
+		result.faults=(result.faults<CNT_FAULT)?result.faults+1:CNT_FAULT;
+		if(result.faults==CNT_FAULT) {
+			result.first_started=0;
+			result.faults=0;
 			pwm_lock();
+			return;
+		}
 	}
-	result.first_started;
+	if(result.output_voltage<TARGET_VALUE_MIN){
+		pwm_up(PWM_VALUE);
+		return;
+	}
+	if( result.output_voltage>TARGET_VALUE_MAX ||
+		result.output_current>MAX_CURRENT){
+		pwm_down(PWM_VALUE);
+		return;
+	}
+	if( result.output_current>MAX_CURRENT){
+		pwm_down(PWM_VALUE*100);
+		return;
+	}
 }
