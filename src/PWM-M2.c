@@ -14,7 +14,6 @@
 // Push Pull Mode
 //CH1: PWM mode 2, CH2: PWM mode 1, preload enabled on all channels
 
-
 #include "main.h"
 #include "pwm-2.h"
 void led1_on(void);
@@ -55,7 +54,6 @@ void start_pwm_2(){
     // BDTR - break and dead time register
     __TIMER->BDTR|=TIM_BDTR_MOE;
 
-//    TIM1->CCR2=0;
     // Задаем период меандра в тиках счетчика
     // CR1- Control Register, включаем автоматическую загрузку-перезагрузку таймера
     __TIMER->CR1=TIM_CR1_ARPE;
@@ -129,6 +127,8 @@ uint8_t pwm_up(uint16_t pwm_value){
 
 void soft_start(){
 	volatile uint8_t add_value, minus_value = 0;
+  init_adc_struct();
+
 	for( uint8_t i=0; i<(MEANDR_TIMER_TICKS-DEADTIME_TICKS)/5; i++){
 		add_value = (FIRST_COUNTER+PWM_VALUE>=(MEANDR_TIMER_TICKS-DEADTIME_TICKS)/2)?(MEANDR_TIMER_TICKS-DEADTIME_TICKS)/2-FIRST_COUNTER:PWM_VALUE;
 		minus_value = (SECOND_COUNTER-PWM_VALUE<=(MEANDR_TIMER_TICKS+DEADTIME_TICKS)/2)?SECOND_COUNTER-(MEANDR_TIMER_TICKS+DEADTIME_TICKS)/2:PWM_VALUE;
