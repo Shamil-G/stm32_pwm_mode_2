@@ -11,8 +11,8 @@
 #define STM32F750
 
 #include "dev-include\stm32h743-pwm.h"
-#include "stm32f401-pwm.h"
-#include "stm32f407vet-pwm.h"
+#include "dev-include\stm32f401-pwm.h"
+#include "dev-include\stm32f407vet-pwm.h"
 
 //  Разгон до 1/INIT_PART
 #define INIT_PART			9
