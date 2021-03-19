@@ -68,7 +68,8 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc)
 		pwm_up(PWM_VALUE);
 		return;
 	}
-	if( result.output_voltage>TARGET_VALUE_MAX ){
+	if( result.output_voltage>TARGET_VALUE_MAX ||
+		result.output_current>MAX_CURRENT){
 		pwm_down(PWM_VALUE);
 		return;
 	}
