@@ -23,7 +23,7 @@ void led2_off(void);
 
 void start_pwm_2(){
 //*
-//	GPIOENABLE(); -- Пока не работает
+//	GPIOENABLE(); -- Пока не работает 2
 //	TIMx_CCMR1 - capture/compare mode register
 #ifdef PP_MODE
     // Делитель частоты таймера
